@@ -70,9 +70,9 @@ app.post("/signin",(req, res) => {
 
 app.put("/image",(req, res) => {
     var {userInfo,addedEnties} = req.body;
-    userInfo.entries = Number(userInfo.entries) + addedEnties;
+    var updatedEntries = Number(userInfo.entries) + addedEnties;
     console.log("server",userInfo);
-    knex("users").where({iduser : userInfo.iduser}).update({entries : userInfo.entries}).catch(console.log);
+    knex("users").where({iduser : userInfo.iduser}).update({entries :updatedEntries}).catch(console.log);
     res.json(userInfo);
 });
    
