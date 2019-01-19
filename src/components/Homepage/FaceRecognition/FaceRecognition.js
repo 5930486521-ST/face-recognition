@@ -9,7 +9,7 @@ const FaceRecognition = ({usedUrl, box}) =>{
             {box.map( (face,idx)=>
                 <div className='bounding-box' key={idx} style={{top: face.topRow, right: face.rightCol, bottom: face.bottomRow, left: face.leftCol}}></div>
             )}
-        </div>)
+        </div>
     </div>);
 }
 export default FaceRecognition;

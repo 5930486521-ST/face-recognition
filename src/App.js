@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import NavBar from "./components/NavBar/NavBar";
-import Particles from 'react-particles-js';
 import SigninPage from "./components/SigninPage/SigninPage"
 import RegisPage from "./components/RegisPage/RegisPage"
 import Homepage from "./components/Homepage/Homepage"
@@ -9,18 +8,6 @@ import Homepage from "./components/Homepage/Homepage"
 // const LOCALHOST_URL = "http://localhost:3000";
 const HEROKU_URL = "https://face-recognition-2019.herokuapp.com";
 export const URL = HEROKU_URL;
-
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 30,
-      density: {
-        enable: true,
-        value_area: 400
-      }
-    }
-  }
-}
 
 class App extends Component {
   constructor(){
@@ -59,7 +46,7 @@ class App extends Component {
     console.log(userInfo);
     return (
       <div>
-        <Particles className='particles' params={particlesOptions}/>
+        
         <NavBar isSignedin={isSignedin} onchangeRoute={this.onchangeRoute} />
         {isSignedin? 
           <Homepage userInfo = {userInfo} updateUserRank= {this.updateUserRank}/> :
