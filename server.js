@@ -35,7 +35,7 @@ app.get('/',  (req, res) => {
 });
 
 app.get('/user',  (req, res) => {
-    knex("user").select("*").then(userArray =>  res.json(userArray));
+    knex("users").select("*").then(userArray =>  res.json(userArray));
 });
 
 app.post("/regis",(req, res) => {
@@ -46,7 +46,7 @@ app.post("/regis",(req, res) => {
             entries : 0,
             joined : new Date()};
     knex.transaction(trx =>{
-        trx("user").insert(newUser)
+        trx("users").insert(newUser)
          .then( idUser => {
             return trx("signin").insert({email : email,
                 hashedPass : hash})
@@ -70,7 +70,7 @@ app.post("/signin",(req, res) => {
 app.put("/image",(req, res) => {
     var {userInfo,addedEnties} = req.body;
     userInfo.entries += addedEnties;
-    knex("user").where({idUser : userInfo.idUser}).update({entries : userInfo.entries}).catch(console.log);
+    knex("users").where({idUser : userInfo.idUser}).update({entries : userInfo.entries}).catch(console.log);
     res.json(userInfo);
 });
    
