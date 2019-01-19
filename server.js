@@ -72,7 +72,7 @@ app.put("/image",(req, res) => {
     var {userInfo,addedEnties} = req.body;
     userInfo.entries = Number(userInfo.entries) + addedEnties;
     console.log("server",userInfo);
-    knex("users").where({iduser : userInfo.iduser}).update({entries : userInfo.entries});
+    knex("users").where({iduser : userInfo.iduser}).update({entries : userInfo.entries}).catch(console.log);
     res.json(userInfo);
 });
    
