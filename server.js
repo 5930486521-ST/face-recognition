@@ -24,7 +24,8 @@ const saltRounds = 10;
 var salt = bcrypt.genSaltSync(saltRounds);
 
 app.get('/',  (req, res) => {
-    knex("signin").select("*").then(userArray =>  res.json(userArray));
+    res.json("hello the server start!")
+    // knex("signin").select("*").then(userArray =>  res.json(userArray));
 });
 
 app.get('/user',  (req, res) => {
