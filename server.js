@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 
 var knex = require('knex')({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
+    client : "pg",
+    connection: {
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
     }
-);
+});
 
 // const DB_PASSWORD = process.env.DB_PASSWORD ;
 // const options = {
