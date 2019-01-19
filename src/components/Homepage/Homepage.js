@@ -6,7 +6,7 @@ import FaceRecognition from "./FaceRecognition/FaceRecognition"
 import Clarifai from "clarifai";
 
 const app = new Clarifai.App({
-    apiKey: '3ffb16394ca04e83a3fd7a43b2f201c6'
+    apiKey: '3ffb16394ca04e83a3fd7a43b2f201c6Deleteit'
    });
 
 class Homepage extends Component {
@@ -19,7 +19,7 @@ class Homepage extends Component {
   }
   
   calculateBox(currentUrl){    
-    app.models.predict("a403429f2ddf4b49b307e318f00e528b", currentUrl)
+    app.models.predict("a403429f2ddf4b49b307e318f00e528bDeleteit", currentUrl)
       .then( respond => {
         const image = document.getElementById('inputimage');
         const width = Number(image.width);
