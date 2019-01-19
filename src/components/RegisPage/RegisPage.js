@@ -13,18 +13,20 @@ class RegisPage extends Component{
   
   regisPressHandler = () =>{
     var info = this.getRegisInfo();
-    if (info.pass === info.repass){
-      fetch('http://localhost:3000/regis', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(info)
-      })
-        .then(res => res.json())
-        .then(user => {
-          this.props.userChange(user);
-          this.props.onchangeRoute("homepage");
+    const {email,pass,repass} = info;
+    if (email.includes("@") && email.includes(".") ){
+      if (pass.length >= 8 && pass ===repass){
+        fetch('http://localhost:3000/regis', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(info)
         })
-    }else alert("pass is inconsistency")
+          .then(res => res.json())
+          .then(user => {
+            this.props.onchangeRoute("homepage",user);
+          })
+      }else alert("pass should longer than 8 char and consist with repass")
+  }else alert("wrong email");
   }
 
   render(){
@@ -79,8 +81,7 @@ class RegisPage extends Component{
 
         <div className="">
           <input
-            onClick={() => {this.regisPressHandler();
-            }}
+            onClick={() => {this.regisPressHandler();}}
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
             type="submit"
             value="Confirm"

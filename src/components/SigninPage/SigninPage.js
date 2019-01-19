@@ -6,23 +6,30 @@ const getSigninInfo = ()  =>{
   return {email,pass};
 }
 
-const signInPressHandler = (userChange,onchangeRoute) =>{
-  fetch("http://localhost:3000/signin",{
-    method : "post",
-    headers: {"Content-type": "application/json"},
-    body :  JSON.stringify(getSigninInfo())
-  })
+const signInPressHandler = (onchangeRoute) =>{
+  const info = getSigninInfo();
+  const {email,pass} = info;
+  if (email.includes("@") && email.includes(".") ){
+    if (pass.length >= 8 ){
+      fetch("http://localhost:3000/signin",{
+        method : "post",
+        headers: {"Content-type": "application/json"},
+        body :  JSON.stringify(info)
+      })
     .then(res => {
       if  (res.status === 200) {
-        res.json().then(userChange);
-        onchangeRoute('homepage');
+        res.json()
+          .then(userInfo =>onchangeRoute('homepage',userInfo));
       }else if (res.status === 401) alert("wrong credential");
       else alert(res.statusText);
     })
     .then(console.log)
+    }else alert("Your password should longer than 8 char");
+  }else alert("wrong email");
+  
 }
 
-const SigninPage = ({userChange,onchangeRoute}) =>{
+const SigninPage = ({onchangeRoute}) =>{
     return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
@@ -50,7 +57,7 @@ const SigninPage = ({userChange,onchangeRoute}) =>{
             </fieldset>
             <div className="">
               <input
-                onClick={() => signInPressHandler(userChange,onchangeRoute)}
+                onClick={() => signInPressHandler(onchangeRoute)}
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"
                 value="Sign in"

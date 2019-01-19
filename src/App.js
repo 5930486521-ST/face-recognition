@@ -28,17 +28,17 @@ class App extends Component {
     }
   }
 
-  onchangeRoute = (stage) =>{
+  onchangeRoute = (stage, newUser = {}) =>{
     if (stage === "homepage"){
-      this.setState({route: stage ,isSignedin: true});
+      this.setState({route: stage ,isSignedin: true , userInfo:newUser});
     } else {
-      this.setState({route: stage ,isSignedin: false});
+      this.setState({route: stage ,isSignedin: false, userInfo:newUser });
     }
   }
 
-  userChange = (newUser) =>{
-    this.setState({userInfo : newUser});
-  }
+  // userChange = () =>{
+  //   this.setState({userInfo : newUser});
+  // }
 
   updateUserRank = (addMore) =>{
     fetch("http://localhost:3000/image",{
@@ -59,7 +59,7 @@ class App extends Component {
         <NavBar isSignedin={isSignedin} onchangeRoute={this.onchangeRoute} />
         {isSignedin? 
           <Homepage userInfo = {userInfo} updateUserRank= {this.updateUserRank}/> :
-          (route==="signinPage")? <SigninPage userChange={this.userChange} onchangeRoute={this.onchangeRoute} />: <RegisPage userChange={this.userChange} onchangeRoute={this.onchangeRoute}/>} 
+          (route==="signinPage")? <SigninPage onchangeRoute={this.onchangeRoute} />: <RegisPage onchangeRoute={this.onchangeRoute}/>} 
    
       </div>
     );
