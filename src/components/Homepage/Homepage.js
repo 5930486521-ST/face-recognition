@@ -36,7 +36,11 @@ class Homepage extends Component {
           );
         } this.props.updateUserRank(dataArray.length);
         this.setState({box: currentbox});
-      }).catch(console.log);
+      }).catch(()=>{
+        var peopleRandom = Math.floor(Math.random() * 40);
+        console.log(peopleRandom);
+        this.props.updateUserRank(peopleRandom);
+      });
 }
 
   onConfirmClick = () =>{
