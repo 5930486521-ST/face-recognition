@@ -71,6 +71,7 @@ app.post("/signin",(req, res) => {
 app.put("/image",(req, res) => {
     var {userInfo,addedEnties} = req.body;
     var updatedEntries = Number(userInfo.entries) + addedEnties;
+    userInfo.entries = updatedEntries;
     console.log("server",userInfo);
     knex("users").where({iduser : userInfo.iduser}).update({entries :updatedEntries}).catch(console.log);
     res.json(userInfo);
