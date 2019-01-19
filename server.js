@@ -49,7 +49,7 @@ app.post("/regis",(req, res) => {
         trx("users").insert(newUser)
          .then( idUser => {
             return trx("signin").insert({email : email,
-                hashedPass : hash})
+                hashedpass : hash})
          })
          .then(trx.commit)
          .catch(trx.rollback)
@@ -60,7 +60,7 @@ app.post("/regis",(req, res) => {
 app.post("/signin",(req, res) => {
     knex.select("*").from("signin").where({email : req.body.email})
         .then(siginArray => {
-            if (bcrypt.compareSync(req.body.pass, siginArray[0].hashedPass)){
+            if (bcrypt.compareSync(req.body.pass, siginArray[0].hashedpass)){
                 knex("users").select("*").where({email : req.body.email})
                     .then(dataArray => res.status(200).json(dataArray[0]));
             }else res.status(401).json("wrong credential");
