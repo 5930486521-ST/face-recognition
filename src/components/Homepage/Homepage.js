@@ -36,7 +36,7 @@ class Homepage extends Component {
           );
         } this.props.updateUserRank(dataArray.length);
         this.setState({box: currentbox});
-      });
+      }).catch(console.log);
 }
 
   onConfirmClick = () =>{

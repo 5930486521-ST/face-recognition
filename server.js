@@ -47,7 +47,7 @@ app.post("/regis",(req, res) => {
             joined : new Date()};
     knex.transaction(trx =>{
         trx("users").insert(newUser)
-         .then( idUser => {
+         .then( iduser => {
             return trx("signin").insert({email : email,
                 hashedpass : hash})
          })
@@ -69,8 +69,7 @@ app.post("/signin",(req, res) => {
 
 app.put("/image",(req, res) => {
     var {userInfo,addedEnties} = req.body;
-    userInfo.entries += addedEnties;
-    knex("users").where({idUser : userInfo.idUser}).update({entries : userInfo.entries}).catch(console.log);
+    knex("users").where({iduser : userInfo.iduser}).update({entries : Number(userInfo.entries) + addedEnties}).catch(console.log);
     res.json(userInfo);
 });
    
