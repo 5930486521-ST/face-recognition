@@ -41,9 +41,10 @@ app.get('/user',  (req, res) => {
 app.post("/regis",(req, res) => {
     const {name,email,pass,repass} = req.body;
     var hash = bcrypt.hashSync(pass, salt);
-    const newUser = {email : email,
+    const newUser = {
+            email : email,
             name : name,
-            entries : 0,
+            entries : "0",
             joined : new Date()};
     knex.transaction(trx =>{
         trx("users").insert(newUser)
