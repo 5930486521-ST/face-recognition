@@ -1,5 +1,5 @@
 import React , {Component}from "react";
-
+import {URL} from "../../App";
 
 class RegisPage extends Component{
 
@@ -16,7 +16,7 @@ class RegisPage extends Component{
     const {email,pass,repass} = info;
     if (email.includes("@") && email.includes(".") ){
       if (pass.length >= 8 && pass ===repass){
-        fetch('http://localhost:3000/regis', {
+        fetch(URL+'/regis', {
           method: 'post',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(info)
