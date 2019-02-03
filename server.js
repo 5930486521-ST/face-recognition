@@ -3,25 +3,25 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 
-var knex = require('knex')({
-    client : "pg",
-    connection: {
-        connectionString: process.env.DATABASE_URL,
-        ssl: true,
-    }
-});
-
-// const DB_PASSWORD = process.env.DB_PASSWORD ;
-// const options = {
-//     client: 'mysql2',
+// var knex = require('knex')({
+//     client : "pg",
 //     connection: {
-//         host: '127.0.0.1',
-//         user: 'root',
-//         password: DB_PASSWORD,
-//         database: 'face-recognition'
+//         connectionString: process.env.DATABASE_URL,
+//         ssl: true,
 //     }
-// }
-// const knex = require('knex')(options);
+// });
+
+const DB_PASSWORD = process.env.DB_PASSWORD ;
+const options = {
+    client: 'mysql2',
+    connection: {
+        host: '127.0.0.1',
+        user: 'root',
+        password: DB_PASSWORD,
+        database: 'face-recognition'
+    }
+}
+const knex = require('knex')(options);
 
 var app = express();
 app.use(cors());

@@ -5,9 +5,9 @@ import SigninPage from "./components/SigninPage/SigninPage"
 import RegisPage from "./components/RegisPage/RegisPage"
 import Homepage from "./components/Homepage/Homepage"
 
-// const LOCALHOST_URL = "http://localhost:3000";
-const HEROKU_URL = "https://face-recognition-2019.herokuapp.com";
-export const URL = HEROKU_URL;
+const LOCALHOST_URL = "http://localhost:3000";
+// const HEROKU_URL = "https://face-recognition-2019.herokuapp.com";
+export const URL = LOCALHOST_URL;
 
 class App extends Component {
   constructor(){
