@@ -17,7 +17,7 @@ const options = {
     connection: {
         host: '127.0.0.1',
         user: 'root',
-        password: DB_PASSWORD,
+        password: '',
         database: 'face-recognition'
     }
 }
@@ -35,7 +35,7 @@ app.get('/',  (req, res) => {
 });
 
 app.get('/user',  (req, res) => {
-    knex("users").select("*").then(userArray =>  res.json(userArray));
+    knex("user").select("*").then(userArray =>  res.json(userArray));
 });
 
 app.post("/regis",(req, res) => {
@@ -47,10 +47,10 @@ app.post("/regis",(req, res) => {
             entries : "0",
             joined : new Date()};
     knex.transaction(trx =>{
-        trx("users").insert(newUser)
+        trx("user").insert(newUser)
          .then( iduser => {
             return trx("signin").insert({email : email,
-                hashedpass : hash})
+                hashedPass : hash})
          })
          .then(trx.commit)
          .catch(trx.rollback)
@@ -61,8 +61,8 @@ app.post("/regis",(req, res) => {
 app.post("/signin",(req, res) => {
     knex.select("*").from("signin").where({email : req.body.email})
         .then(siginArray => {
-            if (bcrypt.compareSync(req.body.pass, siginArray[0].hashedpass)){
-                knex("users").select("*").where({email : req.body.email})
+            if (bcrypt.compareSync(req.body.pass, siginArray[0].hashedPass)){
+                knex("user").select("*").where({email : req.body.email})
                     .then(dataArray => res.status(200).json(dataArray[0]));
             }else res.status(401).json("wrong credential");
         }).catch(err => res.status(400).json(err));
@@ -72,9 +72,8 @@ app.put("/image",(req, res) => {
     var {userInfo,addedEnties} = req.body;
     var updatedEntries = Number(userInfo.entries) + addedEnties;
     userInfo.entries = updatedEntries;
-    console.log("server",userInfo);
-    knex("users").where({iduser : userInfo.iduser}).update({entries :updatedEntries}).catch(console.log);
+    knex("user").where({idUser : userInfo.idUser}).update({entries :updatedEntries}).catch(console.log);
     res.json(userInfo);
 });
    
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8001);

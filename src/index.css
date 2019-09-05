@@ -25,3 +25,7 @@ button {
   left: 0;
   z-index: -1;
 }
+
+.hover-black:hover, .hover-black:focus  {
+  background-color: #000 !important;
+} 

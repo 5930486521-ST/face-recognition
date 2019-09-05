@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import './App.css';
 import NavBar from "./components/NavBar/NavBar";
 import SigninPage from "./components/SigninPage/SigninPage"
 import RegisPage from "./components/RegisPage/RegisPage"
 import Homepage from "./components/Homepage/Homepage"
 
-const LOCALHOST_URL = "http://localhost:3000";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'tachyons';
+import './index.css';
+
+const LOCALHOST_URL = "http://localhost:8001";
 // const HEROKU_URL = "https://face-recognition-2019.herokuapp.com";
 export const URL = LOCALHOST_URL;
 
@@ -32,6 +35,7 @@ class App extends Component {
   // }
 
   updateUserRank = (addMore) =>{
+    console.log(this.state.userInfo)
     fetch(URL+"/image",{
       method : "put",
       headers: {"Content-type": "application/json"},
