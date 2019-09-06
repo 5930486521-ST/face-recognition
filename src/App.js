@@ -3,12 +3,13 @@ import NavBar from "./components/NavBar/NavBar";
 import SigninPage from "./components/SigninPage/SigninPage"
 import RegisPage from "./components/RegisPage/RegisPage"
 import Homepage from "./components/Homepage/Homepage"
+import ProfileModal from "./components/Homepage/ProfileModal"
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'tachyons';
 import './index.css';
 
-const LOCALHOST_URL = "http://localhost:8001";
+const LOCALHOST_URL = "http://localhost:8000";
 // const HEROKU_URL = "https://face-recognition-2019.herokuapp.com";
 export const URL = LOCALHOST_URL;
 
@@ -18,7 +19,8 @@ class App extends Component {
     this.state = {
       route: "signinPage",
       isSignedin: false,
-      userInfo: {}
+      userInfo: {},
+      isProfileModalShown: false
     }
   }
 
@@ -44,18 +46,25 @@ class App extends Component {
       .then(res => res.json())
       .then(newInfo => this.setState({userInfo: newInfo}));    
   }
+
+  toggleProfileModal = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+       isProfileModalShown: !prevState.isProfileModalShown
+    }))
+  }
   
   render() {
-    var {route, isSignedin,userInfo} = this.state;
+    var {route, isSignedin, userInfo, isProfileModalShown} = this.state;
     console.log(userInfo);
     return (
       <div>
         
-        <NavBar isSignedin={isSignedin} onchangeRoute={this.onchangeRoute} />
+        <NavBar isSignedin={isSignedin} onchangeRoute={this.onchangeRoute} toggleProfileModal={this.toggleProfileModal} />
         {isSignedin? 
           <Homepage userInfo = {userInfo} updateUserRank= {this.updateUserRank}/> :
           (route==="signinPage")? <SigninPage onchangeRoute={this.onchangeRoute} />: <RegisPage onchangeRoute={this.onchangeRoute}/>} 
-   
+        <ProfileModal toggleHandler={this.toggleProfileModal} isShown={isProfileModalShown} userInfo={userInfo} />
       </div>
     );
   }

@@ -29,3 +29,8 @@ button {
 .hover-black:hover, .hover-black:focus  {
   background-color: #000 !important;
 } 
+
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
