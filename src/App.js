@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'tachyons';
 import './index.css';
 
-const LOCALHOST_URL = "http://localhost:8000";
+const LOCALHOST_URL = "http://localhost:3000";
 // const HEROKU_URL = "https://face-recognition-2019.herokuapp.com";
 export const URL = LOCALHOST_URL;
 
@@ -21,6 +21,29 @@ class App extends Component {
       isSignedin: false,
       userInfo: {},
       isProfileModalShown: false
+    }
+  }
+
+  componentWillMount() {
+    const idToken = window.localStorage.getItem("idToken")
+    if(idToken){
+      this.onchangeRoute('homepage')
+      fetch(URL+"/signin",{
+          method : "get",
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": window.localStorage.getItem("idToken")
+          }
+      })
+        .then(res => {
+          if  (res.status === 200) {
+            res.json()
+              .then(userInfo => this.onchangeRoute('homepage', userInfo));
+          }
+          else {
+            this.onchangeRoute('signinPage')
+          }
+        })
     }
   }
 
@@ -40,8 +63,24 @@ class App extends Component {
     console.log(this.state.userInfo)
     fetch(URL+"/image",{
       method : "put",
-      headers: {"Content-type": "application/json"},
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": window.localStorage.getItem("idToken")
+      },
       body : JSON.stringify({userInfo:this.state.userInfo , addedEnties : addMore})
+    })
+      .then(res => res.json())
+      .then(newInfo => this.setState({userInfo: newInfo}));    
+  }
+
+  updateUserInfo = (updatedField) =>{
+    fetch(URL + `/profile/${this.state.userInfo.iduser}`,{
+      method : "post",
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": window.localStorage.getItem("idToken")
+      },
+      body : JSON.stringify(updatedField),
     })
       .then(res => res.json())
       .then(newInfo => this.setState({userInfo: newInfo}));    
@@ -64,7 +103,7 @@ class App extends Component {
         {isSignedin? 
           <Homepage userInfo = {userInfo} updateUserRank= {this.updateUserRank}/> :
           (route==="signinPage")? <SigninPage onchangeRoute={this.onchangeRoute} />: <RegisPage onchangeRoute={this.onchangeRoute}/>} 
-        <ProfileModal toggleHandler={this.toggleProfileModal} isShown={isProfileModalShown} userInfo={userInfo} />
+        <ProfileModal toggleHandler={this.toggleProfileModal} isShown={isProfileModalShown} userInfo={userInfo} onSubmitUpdate={this.updateUserInfo} />
       </div>
     );
   }

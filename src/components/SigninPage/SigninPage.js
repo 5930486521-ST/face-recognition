@@ -20,7 +20,10 @@ const signInPressHandler = (onchangeRoute) =>{
     .then(res => {
       if  (res.status === 200) {
         res.json()
-          .then(userInfo =>onchangeRoute('homepage',userInfo));
+          .then(userInfo =>{
+            window.localStorage.setItem('idToken', userInfo.idToken )
+            onchangeRoute('homepage',userInfo)
+          });
       }else if (res.status === 401) alert("wrong credential");
       else alert(res.statusText);
     })

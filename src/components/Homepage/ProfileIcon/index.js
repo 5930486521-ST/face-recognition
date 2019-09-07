@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import { URL } from "../../../App";
 
 class ProfileIcon extends React.Component {
   constructor(props) {
@@ -50,7 +51,19 @@ class ProfileIcon extends React.Component {
             <DropdownItem onClick={toggleProfileModal}>
               View Profile
             </DropdownItem>
-            <DropdownItem onClick={() => onchangeRoute("signinPage")}>
+            <DropdownItem
+              onClick={async () => {
+                onchangeRoute("signinPage");
+                await fetch(URL + "/signout", {
+                  method: "get",
+                  headers: {
+                    "Content-type": "application/json",
+                    Authorization: window.localStorage.getItem("idToken")
+                  }
+                });
+                window.localStorage.removeItem("idToken");
+              }}
+            >
               Sign Out
             </DropdownItem>
           </DropdownMenu>
